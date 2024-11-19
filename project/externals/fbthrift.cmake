@@ -6,15 +6,14 @@ set(name fbthrift)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/facebook/fbthrift/archive/refs/tags/v2022.12.26.00.tar.gz
-    URL_HASH MD5=1e1a15f091557367c9a10d61f2afc8af
-    DOWNLOAD_NAME fbthrift-2022-12-26.tar.gz
+    URL https://github.com/facebook/fbthrift/archive/refs/tags/v${fb_release_tag}.00.tar.gz
+    URL_HASH MD5=8021ae5031a1d8d811f09cf99320e047
+    DOWNLOAD_NAME fbthrift-${fb_package_name_part}.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
     DOWNLOAD_DIR ${DOWNLOAD_DIR}
     SOURCE_DIR ${source_dir}
-    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-2022-12-26.patch
     CMAKE_COMMAND env PATH=${CMAKE_INSTALL_PREFIX}/bin:$ENV{PATH} ${CMAKE_COMMAND}
     CMAKE_ARGS
         ${common_cmake_args}
@@ -23,6 +22,7 @@ ExternalProject_Add(
         -DBoost_NO_BOOST_CMAKE=ON
         -Denable_tests=OFF
         -DOPENSSL_ROOT_DIR=${CMAKE_INSTALL_PREFIX}
+        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -DGLOG_USE_GLOG_EXPORT ${extra_cpp_flags}"
     BUILD_COMMAND make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND make -s -j${BUILDING_JOBS_NUM} install

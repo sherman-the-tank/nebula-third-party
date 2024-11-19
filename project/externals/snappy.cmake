@@ -6,15 +6,14 @@ set(name snappy)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/google/snappy/archive/refs/tags/1.1.9.tar.gz
-    URL_HASH MD5=213b6324b7790d25f5368629540a172c
-    DOWNLOAD_NAME snappy-1.1.9.tar.gz
+    URL https://github.com/google/snappy/archive/refs/tags/1.2.1.tar.gz
+    URL_HASH MD5=dd6f9b667e69491e1dbf7419bdf68823
+    DOWNLOAD_NAME snappy-1.2.1.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
     DOWNLOAD_DIR ${DOWNLOAD_DIR}
     SOURCE_DIR ${source_dir}
-    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-1.1.9.patch
     CMAKE_ARGS
         ${common_cmake_args}
         -DCMAKE_BUILD_TYPE=Release

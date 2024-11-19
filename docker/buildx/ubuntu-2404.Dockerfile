@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 SHELL ["/bin/bash", "-c"]
 ARG DEBIAN_FRONTEND=noninteractive
 ARG GOLANG_VERSION=1.21.6
@@ -14,7 +14,7 @@ RUN apt update \
                        patch \
                        python3 \
                        python3-dev \
-                       lsb-core \
+                       lsb-release \
                        zlib1g-dev \
                        build-essential \
                        libreadline-dev \
@@ -30,14 +30,10 @@ RUN apt update \
                        gperf \
                        gettext \
                        ninja-build \
+                       groff-base \
+                       texinfo \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
-
-# Install cmake
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.23.5/cmake-3.23.5-linux-$(uname -m).sh \
-    && chmod +x cmake-3.23.5-linux-$(uname -m).sh \
-    && ./cmake-3.23.5-linux-$(uname -m).sh --skip-license --prefix=/usr/local \
-    && rm cmake-3.23.5-linux-$(uname -m).sh
 
 # Install golang
 RUN ARCH="$(uname -m)"; \

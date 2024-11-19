@@ -1,14 +1,15 @@
-# Copyright (c) 2019 vesoft inc. All rights reserved.
+# Copyright (c) 2024 vesoft inc. All rights reserved.
 #
 # This source code is licensed under Apache 2.0 License.
 
-set(name glog)
+set(name libxml2)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
+
 ExternalProject_Add(
     ${name}
-    URL https://github.com/google/glog/archive/refs/tags/v0.7.1.tar.gz
-    URL_HASH MD5=128e2995cc33d794ff24f785a3060346
-    DOWNLOAD_NAME glog-0.7.1.tar.gz
+    URL https://github.com/GNOME/libxml2/archive/refs/tags/v2.13.5.tar.gz
+    URL_HASH MD5=b6ead19aff44b49f2641cb26be5e0b4e
+    DOWNLOAD_NAME libxml2-v2.13.5.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
@@ -17,9 +18,14 @@ ExternalProject_Add(
     CMAKE_ARGS
         ${common_cmake_args}
         -DCMAKE_BUILD_TYPE=Release
+        -DBUILD_SHARED_LIBS=ON
+        -DLIBXML2_WITH_ICONV=OFF
+        -DLIBXML2_WITH_LZMA=OFF
+        -DLIBXML2_WITH_PYTHON=OFF
+        -DLIBXML2_WITH_ZLIB=OFF
     BUILD_COMMAND make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1
-    INSTALL_COMMAND make -s -j${BUILDING_JOBS_NUM} install
+    INSTALL_COMMAND make -s install -j${BUILDING_JOBS_NUM}
     LOG_CONFIGURE TRUE
     LOG_BUILD TRUE
     LOG_INSTALL TRUE

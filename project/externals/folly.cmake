@@ -6,21 +6,21 @@ set(name folly)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/facebook/folly/archive/refs/tags/v2022.12.26.00.tar.gz
-    URL_HASH MD5=faad7452421564f7cc8cd1a705bdbaa7
-    DOWNLOAD_NAME folly-2022-12-26.tar.gz
+    URL https://github.com/facebook/folly/archive/refs/tags/v${fb_release_tag}.00.tar.gz
+    URL_HASH MD5=d0bbb2dace3703739a556456c50e25f3
+    DOWNLOAD_NAME folly-${fb_package_name_part}.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
     DOWNLOAD_DIR ${DOWNLOAD_DIR}
     SOURCE_DIR ${source_dir}
-    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-2022-12-26.patch
+    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-${fb_package_name_part}.patch
     CMAKE_ARGS
         ${common_cmake_args}
         -DCMAKE_BUILD_TYPE=Release
         -DBoost_NO_BOOST_CMAKE=ON
-        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -fPIC -D__STDC_FORMAT_MACROS=1 -DFOLLY_HAVE_CLOCK_GETTIME -D__USE_POSIX199309 ${extra_cpp_flags}"
-        -DPACKAGE_VERSION=2022.12.26
+        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -fPIC -D__STDC_FORMAT_MACROS=1 -DFOLLY_HAVE_CLOCK_GETTIME -D__USE_POSIX199309 -DGLOG_USE_GLOG_EXPORT ${extra_cpp_flags}"
+#        -DPACKAGE_VERSION=2024.11.25
         -DFOLLY_CXX_FLAGS=-Wno-error
     BUILD_COMMAND make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1

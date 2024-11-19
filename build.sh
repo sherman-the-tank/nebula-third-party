@@ -109,7 +109,7 @@ then
 fi
 
 # NOTE Please adjust the expected checksum once the source tarball changed
-if [[ ! $checksum = d466687c0f2946fd300e8c2bca42a5d7 ]]
+if [[ ! $checksum = 1aa948a1b8ce1430dc64fa269a58a33a ]]
 then
     rm -f $source_tar_name
     hash wget &> /dev/null && download_cmd="wget -c"
@@ -206,7 +206,7 @@ end_time=$(date +%s)
 find $install_dir -name '*.la' | xargs rm -f
 
 # Remove big unneeded binaries
-binaries+=(openssl gss-client dump_syms_mac)
+binaries+=(gss-client dump_syms_mac)
 binaries+=(uuclient sim_client)
 binaries+=(sclient compile_et)
 binaries+=(c_rehash gflags_completions.sh)

@@ -20,9 +20,9 @@ endif()
 
 ExternalProject_Add(
     ${name}
-    URL https://cytranet.dl.sourceforge.net/project/boost/boost/1.81.0/boost_1_81_0.tar.gz
-    URL_HASH MD5=4bf02e84afb56dfdccd1e6aec9911f4b
-    DOWNLOAD_NAME boost-1.81.0.tar.gz
+    URL https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.gz
+    URL_HASH MD5=ac857d73bb754b718a039830b07b9624
+    DOWNLOAD_NAME boost-1.86.0.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
@@ -31,7 +31,7 @@ ExternalProject_Add(
     CONFIGURE_COMMAND
         ./bootstrap.sh
             --without-icu
-            --with-libraries=context,thread,system,filesystem,graph,program_options,regex,iostreams,date_time,python
+            --with-libraries=context,thread,system,filesystem,graph,program_options,regex,iostreams,date_time,python,chrono
             --prefix=${CMAKE_INSTALL_PREFIX}
 #--without-libraries=wave,nowide,chrono,atomic,fiber,type_erasure,exception,timer,contract,math,locale,json,test,stacktrace,mpi,log,graph,graph_parallel
     BUILD_COMMAND
@@ -66,7 +66,7 @@ ExternalProject_Add_Step(${name} setup-compiler
 ExternalProject_Add_Step(${name} trim
     DEPENDEES install
     COMMAND
-        rm -rf ${CMAKE_INSTALL_PREFIX}/include/boost/{wave,log,atomic,test,fusion,geometry,gil,phoenix,spirit,beast,asio,compute,polygon,proto,units,metaparse,qvm,vmd,xpressive}
+        bash -c "rm -rf ${CMAKE_INSTALL_PREFIX}/include/boost/{wave,log,atomic,test,fusion,geometry,gil,phoenix,spirit,beast,asio,compute,polygon,proto,units,metaparse,qvm,vmd,xpressive}"
     WORKING_DIRECTORY ${source_dir}
 )
 

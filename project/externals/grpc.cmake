@@ -6,9 +6,9 @@ set(name grpc)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/grpc/grpc/archive/refs/tags/v1.60.0.tar.gz
-    URL_HASH MD5=64832f5ba092d160132a8b8be28b0487
-    DOWNLOAD_NAME grpc-1.60.0.tar.gz
+    URL https://github.com/grpc/grpc/archive/refs/tags/v1.68.2.tar.gz
+    URL_HASH MD5=e7455bec08eab3d42067905f7ccdfd86
+    DOWNLOAD_NAME grpc-1.68.2.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
@@ -23,6 +23,7 @@ ExternalProject_Add(
         -DgRPC_SSL_PROVIDER=package
         -DgRPC_PROTOBUF_PROVIDER=package
         -DgRPC_ABSL_PROVIDER=package
+        -DgRPC_BUILD_TESTS=OFF
     BUILD_COMMAND env LD_LIBRARY_PATH=$ENV{LD_LIBRARY_PATH}:${CMAKE_INSTALL_PREFIX}/lib:${CMAKE_INSTALL_PREFIX}/lib64  make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND make -s -j${BUILDING_JOBS_NUM} install

@@ -8,6 +8,12 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16")
     cmake_policy(SET CMP0097 NEW)
 endif()
 
+# Since 3.24, all extracted files will have the timestamps when they are extracted. We
+# want to keep the old behavior, which uses the timestamp in the archive file.
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 OLD)
+endif()
+
 project("Nebula Third Party" C CXX)
 
 set(CXX_STANDARD 17)
@@ -172,18 +178,23 @@ set(ld_flags
     "${extra_link_libs}"
 )
 string(JOIN " " ld_flags ${ld_flags})
+# gcc v14 by default does not allow implicit function declaration. For the sake of
+# compatitbility, we need to add -Wno-error=implicit-function-declaration flag
 set(common_configure_envs
     "env"
     "CC=${CMAKE_C_COMPILER}"
     "CXX=${CMAKE_CXX_COMPILER}"
-    "CFLAGS=${CMAKE_C_FLAGS} -fcommon -fno-omit-frame-pointer -fPIC -O2 -D_DEFAULT_SOURCE -D_GNU_SOURCE ${extra_cpp_flags}"
-    "CXXFLAGS=${CMAKE_CXX_FLAGS} -fcommon -fno-omit-frame-pointer -fPIC -O2 -D_DEFAULT_SOURCE -D_GNU_SOURCE ${extra_cpp_flags}"
+    "CFLAGS=${CMAKE_C_FLAGS} -fcommon -fno-omit-frame-pointer -fPIC -Wno-error=implicit-function-declaration -O2 -D_DEFAULT_SOURCE -D_GNU_SOURCE ${extra_cpp_flags}"
+    "CXXFLAGS=${CMAKE_CXX_FLAGS} -fcommon -fno-omit-frame-pointer -fPIC -Wno-error=implicit-function-declaration -O2 -D_DEFAULT_SOURCE -D_GNU_SOURCE ${extra_cpp_flags}"
     "CPPFLAGS=-isystem ${CMAKE_INSTALL_PREFIX}/include -I${BERKELEYDB_INCLUDE_DIR} ${extra_cpp_flags}"
     "LDFLAGS=-Wl,-rpath=\\\\$\\$ORIGIN ${ld_flags}"
     "LD_LIBRARY_PATH=$$LD_LIBRARY_PATH:${CMAKE_INSTALL_PREFIX}/lib:${CMAKE_INSTALL_PREFIX}/lib64"
     "PATH=${BUILDING_PATH}"
     "ACLOCAL_PATH=${ACLOCAL_PATH}"
 )
+
+set(fb_release_tag "2024.12.02")
+string(REPLACE "." "-" fb_package_name_part ${fb_release_tag})
 
 set(ALL_TARGETS
     abseil
@@ -192,11 +203,12 @@ set(ALL_TARGETS
     boost
     #breakpad
     bzip2
-    cachelib
+    #cachelib
     cyrus-sasl
     date
     double-conversion
     duckdb
+    fast_float
     fatal
     fbthrift
     fizz
@@ -218,6 +230,7 @@ set(ALL_TARGETS
     lz4
     lzma
     mstch
+    mvfst
     openssl
     proxygen
     robin-hood-hashing
@@ -229,6 +242,7 @@ set(ALL_TARGETS
     sparsemap
     wangle
     xsimd
+    xxHash
     zlib
     zstd
     utf8proc
@@ -246,6 +260,7 @@ set(ALL_TARGETS
     hnswlib
     openblas
     annoy
+    libxml2
 )
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR}/cmake)
@@ -322,19 +337,20 @@ maybe_add_dependencies(googlebenchmark googletest)
 
 maybe_add_dependencies(s2geometry googletest glog openssl abseil)
 
-maybe_add_dependencies(folly glog boost double-conversion openssl libevent lzma zstd snappy lz4 libunwind fmt sodium jemalloc libdwarf)
+maybe_add_dependencies(folly glog boost double-conversion openssl libevent lzma zstd snappy lz4 libunwind fmt sodium jemalloc libdwarf fast_float)
 maybe_add_dependencies(fizz folly)
 maybe_add_dependencies(wangle folly fizz)
-maybe_add_dependencies(fbthrift folly bison flex mstch zlib zstd wangle fatal)
+maybe_add_dependencies(mvfst fizz)
+maybe_add_dependencies(fbthrift folly bison flex mstch zlib zstd wangle mvfst fatal xxHash)
 maybe_add_dependencies(proxygen wangle libunwind gperf)
 maybe_add_dependencies(rocksdb snappy zlib zstd bzip2 lz4 lzma libunwind)
-maybe_add_dependencies(cachelib fbthrift sparsemap fizz googletest)
+#maybe_add_dependencies(cachelib fbthrift sparsemap fizz googletest)
 
 # RocksDB has its own copy of gtest, which may conflict with ours
 # Here we build gtest after rocksdb intentionally
 maybe_add_dependencies(googletest rocksdb gflags)
 
-maybe_add_dependencies(arrow openssl xsimd llvm boost jemalloc zstd utf8proc protobuf re2)
+maybe_add_dependencies(arrow openssl xsimd llvm boost jemalloc zstd utf8proc protobuf re2 libxml2)
 maybe_add_dependencies(protobuf zlib abseil)
 maybe_add_dependencies(re2 abseil)
 maybe_add_dependencies(grpc protobuf re2 c-ares openssl)

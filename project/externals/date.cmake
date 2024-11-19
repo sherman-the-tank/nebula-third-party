@@ -6,9 +6,9 @@ set(name date)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/HowardHinnant/date/archive/refs/tags/v3.0.1.tar.gz
-    URL_HASH MD5=78902f47f7931a3ae8a320e0dea1f20a
-    DOWNLOAD_NAME date-3.0.1.tar.gz
+    URL https://github.com/HowardHinnant/date/archive/refs/tags/v3.0.3.tar.gz
+    URL_HASH MD5=7f59eea1aefddaa6fa0a808c12afceca
+    DOWNLOAD_NAME date-3.0.3.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
