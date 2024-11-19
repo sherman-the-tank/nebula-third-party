@@ -6,9 +6,9 @@ set(name openblas)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.27.tar.gz
-    URL_HASH MD5=ef71c66ffeb1ab0f306a37de07d2667f
-    DOWNLOAD_NAME openblas-0.3.27.tar.gz
+    URL https://github.com/OpenMathLib/OpenBLAS/archive/refs/tags/v0.3.29.tar.gz
+    URL_HASH MD5=853a0c5c0747c5943e7ef4bbb793162d
+    DOWNLOAD_NAME openblas-0.3.29.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}

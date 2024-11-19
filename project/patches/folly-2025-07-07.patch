@@ -1,0 +1,30 @@
+diff -ur a/folly/debugging/exception_tracer/ExceptionTracerLib.cpp b/folly/debugging/exception_tracer/ExceptionTracerLib.cpp
+--- a/folly/debugging/exception_tracer/ExceptionTracerLib.cpp  2025-05-05 12:36:28.259719798 +0800
++++ b/folly/debugging/exception_tracer/ExceptionTracerLib.cpp  2025-05-05 12:36:52.909713564 +0800
+@@ -226,6 +226,7 @@
+
+ namespace std {
+
++#if 0
+ __attribute__((__noreturn__)) void rethrow_exception(std::exception_ptr ep) {
+   // Mangled name for std::rethrow_exception
+   // TODO(tudorb): Dicey, as it relies on the fact that std::exception_ptr
+@@ -237,6 +238,7 @@
+   orig_rethrow_exception(std::move(ep));
+   __builtin_unreachable(); // orig_rethrow_exception never returns
+ }
++#endif
+
+ } // namespace std
+ #endif
+--- a/folly/Range.h 2025-07-11 13:27:12.870955979 +0800
++++ b/folly/Range.h 2025-07-11 13:27:36.846952256 +0800
+@@ -714,7 +714,7 @@
+     return Tgt(b_, walk_size());
+   }
+
+-#if FMT_VERSION
++#if FMT_VERSION < 100000
+   template <
+       typename IterType = Iter,
+       std::enable_if_t<detail::range_is_char_type_v_<IterType>, int> = 0>
