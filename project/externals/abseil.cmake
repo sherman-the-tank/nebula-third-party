@@ -6,9 +6,9 @@ set(name abseil)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/abseil/abseil-cpp/archive/refs/tags/20230802.1.tar.gz
-    URL_HASH MD5=84665b6daa5dda7c9082b1a00057457a
-    DOWNLOAD_NAME abseil-2022.06.23.1.tar.gz
+    URL https://github.com/abseil/abseil-cpp/archive/refs/tags/20240722.0.tar.gz
+    URL_HASH MD5=740fb8f35ebdf82740c294bde408b9c0
+    DOWNLOAD_NAME abseil-2024.07.22.0.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}

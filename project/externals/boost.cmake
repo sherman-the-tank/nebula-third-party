@@ -20,9 +20,9 @@ endif()
 
 ExternalProject_Add(
     ${name}
-    URL https://cytranet.dl.sourceforge.net/project/boost/boost/1.81.0/boost_1_81_0.tar.gz
+    URL https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.gz
     URL_HASH MD5=4bf02e84afb56dfdccd1e6aec9911f4b
-    DOWNLOAD_NAME boost-1.81.0.tar.gz
+    DOWNLOAD_NAME boost-1.86.0.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}

@@ -4,7 +4,7 @@
 
 set(name cachelib)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
-set(version "2022.12.26")
+set(version "2024.11.18")
 
 ExternalProject_Add(
     ${name}
@@ -17,7 +17,7 @@ ExternalProject_Add(
     DOWNLOAD_DIR ${DOWNLOAD_DIR}
     SOURCE_DIR ${source_dir}
     SOURCE_SUBDIR cachelib
-    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-2022-12-26.patch
+#    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-2022-12-26.patch
     CMAKE_ARGS
         ${common_cmake_args}
         -DCMAKE_BUILD_TYPE=Release

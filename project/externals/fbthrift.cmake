@@ -6,15 +6,15 @@ set(name fbthrift)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/facebook/fbthrift/archive/refs/tags/v2022.12.26.00.tar.gz
+    URL https://github.com/facebook/fbthrift/archive/refs/tags/v2024.11.18.00.tar.gz
     URL_HASH MD5=1e1a15f091557367c9a10d61f2afc8af
-    DOWNLOAD_NAME fbthrift-2022-12-26.tar.gz
+    DOWNLOAD_NAME fbthrift-2024-11-18.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
     DOWNLOAD_DIR ${DOWNLOAD_DIR}
     SOURCE_DIR ${source_dir}
-    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-2022-12-26.patch
+#    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-2022-12-26.patch
     CMAKE_COMMAND env PATH=${CMAKE_INSTALL_PREFIX}/bin:$ENV{PATH} ${CMAKE_COMMAND}
     CMAKE_ARGS
         ${common_cmake_args}

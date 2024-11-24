@@ -6,9 +6,9 @@ set(name grpc)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/grpc/grpc/archive/refs/tags/v1.60.0.tar.gz
+    URL https://github.com/grpc/grpc/archive/refs/tags/v1.68.0.tar.gz
     URL_HASH MD5=64832f5ba092d160132a8b8be28b0487
-    DOWNLOAD_NAME grpc-1.60.0.tar.gz
+    DOWNLOAD_NAME grpc-1.68.0.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}

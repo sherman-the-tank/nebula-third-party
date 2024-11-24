@@ -6,9 +6,9 @@ set(name wangle)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/facebook/wangle/archive/refs/tags/v2022.12.26.00.tar.gz
+    URL https://github.com/facebook/wangle/archive/refs/tags/v2024.11.18.00.tar.gz
     URL_HASH MD5=8e3200855c6382bf40ec2051e467cdab
-    DOWNLOAD_NAME wangle-2022-12-26.tar.gz
+    DOWNLOAD_NAME wangle-2024-11-18.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}

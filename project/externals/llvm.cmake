@@ -11,9 +11,9 @@ set(LLVM_ENV_COMMAND
 
 ExternalProject_Add(
         ${name}
-        URL https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.7/llvm-project-15.0.7.src.tar.xz
+        URL https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-19.1.4.tar.gz
         URL_HASH MD5=bac436dbd5d37e38d3da75b03629053c
-        DOWNLOAD_NAME llvm-project-15.0.7.src.tar.xz
+        DOWNLOAD_NAME llvm-project-19.1.4.tar.gz
         PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
         TMP_DIR ${BUILD_INFO_DIR}
         STAMP_DIR ${BUILD_INFO_DIR}
