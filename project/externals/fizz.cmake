@@ -6,9 +6,9 @@ set(name fizz)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/facebookincubator/fizz/archive/refs/tags/v2024.11.18.00.tar.gz
-    URL_HASH MD5=74eeed172e4b5bb8d990828e9787527d
-    DOWNLOAD_NAME fizz-2024-11-18.tar.gz
+    URL https://github.com/facebookincubator/fizz/archive/refs/tags/v2024.11.25.00.tar.gz
+    URL_HASH MD5=17072f72c95a781cae42b269800a7b2f
+    DOWNLOAD_NAME fizz-2024-11-25.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
@@ -23,6 +23,7 @@ ExternalProject_Add(
         -DBUILD_EXAMPLES=OFF
         -DCMAKE_BUILD_TYPE=Release
         -DOPENSSL_ROOT_DIR=${CMAKE_INSTALL_PREFIX}
+        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -DGLOG_USE_GLOG_EXPORT ${extra_cpp_flags}"
     BUILD_COMMAND make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND make -s -j${BUILDING_JOBS_NUM} install

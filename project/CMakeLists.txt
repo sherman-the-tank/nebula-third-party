@@ -8,8 +8,10 @@ if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.16")
     cmake_policy(SET CMP0097 NEW)
 endif()
 
-if(POLICY CMP0135) #Since cmake 3.24 it will make some download warning
-    cmake_policy(SET CMP0135 NEW)
+# Since 3.24, all extracted files will have the timestamps when they are extracted. We
+# want to keep the old behavior, which uses the timestamp in the archive file.
+if(POLICY CMP0135)
+    cmake_policy(SET CMP0135 OLD)
 endif()
 
 project("Nebula Third Party" C CXX)
@@ -198,11 +200,12 @@ set(ALL_TARGETS
     boost
     #breakpad
     bzip2
-    cachelib
+    #cachelib
     cyrus-sasl
     date
     double-conversion
     duckdb
+    fast_float
     fatal
     fbthrift
     fizz
@@ -224,6 +227,7 @@ set(ALL_TARGETS
     lz4
     lzma
     mstch
+    mvfst
     openssl
     proxygen
     robin-hood-hashing
@@ -235,6 +239,7 @@ set(ALL_TARGETS
     sparsemap
     wangle
     xsimd
+    xxHash
     zlib
     zstd
     utf8proc
@@ -329,13 +334,13 @@ maybe_add_dependencies(googlebenchmark googletest)
 
 maybe_add_dependencies(s2geometry googletest glog openssl abseil)
 
-maybe_add_dependencies(folly glog boost double-conversion openssl libevent lzma zstd snappy lz4 libunwind fmt sodium jemalloc libdwarf)
+maybe_add_dependencies(folly glog boost double-conversion openssl libevent lzma zstd snappy lz4 libunwind fmt sodium jemalloc libdwarf fast_float)
 maybe_add_dependencies(fizz folly)
 maybe_add_dependencies(wangle folly fizz)
-maybe_add_dependencies(fbthrift folly bison flex mstch zlib zstd wangle fatal)
+maybe_add_dependencies(fbthrift folly bison flex mstch zlib zstd wangle mvfst fatal xxHash)
 maybe_add_dependencies(proxygen wangle libunwind gperf)
 maybe_add_dependencies(rocksdb snappy zlib zstd bzip2 lz4 lzma libunwind)
-maybe_add_dependencies(cachelib fbthrift sparsemap fizz googletest)
+#maybe_add_dependencies(cachelib fbthrift sparsemap fizz googletest)
 
 # RocksDB has its own copy of gtest, which may conflict with ours
 # Here we build gtest after rocksdb intentionally

@@ -2,28 +2,25 @@
 #
 # This source code is licensed under Apache 2.0 License.
 
-set(name s2geometry)
+set(name mvfst)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL  https://github.com/google/s2geometry/archive/v0.11.1.tar.gz
-    URL_HASH MD5=a3ad381b1ed85bdcb7283403ebc781f8
-    DOWNLOAD_NAME ${name}-0.11.1.tar.gz
+    URL https://github.com/facebook/mvfst/archive/refs/tags/v2024.11.25.00.tar.gz
+    URL_HASH MD5=e9bc999920ec8ce0f3aeee7ffde9ef89
+    DOWNLOAD_NAME mvfst-2024-11-25.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
     DOWNLOAD_DIR ${DOWNLOAD_DIR}
     SOURCE_DIR ${source_dir}
-#    PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-0.10.0.patch
     CMAKE_ARGS
         ${common_cmake_args}
-        -DCMAKE_BUILD_TYPE=Release
-        -DBUILD_EXAMPLES=OFF
         -DBUILD_TESTS=OFF
-        -DWITH_GLOG=ON
-        -DWITH_GFLAGS=ON
-        -DBUILD_SHARED_LIBS=ON
-        -DCMAKE_CXX_STANDARD=17
+        -DBoost_NO_BOOST_CMAKE=ON
+        -DBUILD_EXAMPLES=OFF
+        -DCMAKE_BUILD_TYPE=Release
+        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -DGLOG_USE_GLOG_EXPORT ${extra_cpp_flags}"
     BUILD_COMMAND make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND make -s -j${BUILDING_JOBS_NUM} install
@@ -38,7 +35,7 @@ ExternalProject_Add_Step(${name} clean
     DEPENDEES configure
     COMMAND make clean -j
     COMMAND rm -f ${BUILD_INFO_DIR}/${name}-build
-    WORKING_DIRECTORY ${source_dir}
+    WORKING_DIRECTORY <SOURCE_DIR>
 )
 
 ExternalProject_Add_StepTargets(${name} clean)

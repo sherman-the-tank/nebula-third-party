@@ -4,12 +4,12 @@
 
 set(name cachelib)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
-set(version "2024.11.18")
+set(version "20240621")
 
 ExternalProject_Add(
     ${name}
-    URL http://github.com/facebook/cachelib/archive/refs/tags/v${version}.00.tar.gz
-    URL_HASH MD5=6ff1cc495ab500d5b1053248f069a087
+    URL https://github.com/facebook/CacheLib/archive/refs/tags/v${version}.tar.gz
+    URL_HASH MD5=e3214a4795783c3bc28f171d649f7918
     DOWNLOAD_NAME cachelib-${version}.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
@@ -23,7 +23,7 @@ ExternalProject_Add(
         -DCMAKE_BUILD_TYPE=Release
         -DBoost_NO_BOOST_CMAKE=ON
         -DBUILD_TESTS=OFF
-        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -Wno-error=deprecated-declarations ${extra_cpp_flags}"
+        "-DCMAKE_CXX_FLAGS=${CMAKE_CXX_FLAGS} -Wno-error=deprecated-declarations -DGLOG_USE_GLOG_EXPORT ${extra_cpp_flags}"
     BUILD_COMMAND make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND make -s install -j${BUILDING_JOBS_NUM}

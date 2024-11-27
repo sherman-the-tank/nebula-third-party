@@ -1,0 +1,12 @@
+diff -ur a/CMake/FindLibDwarf.cmake b/CMake/FindLibDwarf.cmake
+--- a/folly/CMakeLists.txt  2024-11-16 02:43:10.332397634 +0800
++++ b/folly/CMakeLists.txt  2024-11-26 16:59:32.852485333 +0800
+@@ -29,7 +29,7 @@
+ )
+
+ add_subdirectory(debugging/exception_tracer)
+-add_subdirectory(logging/example)
++#add_subdirectory(logging/example)
+
+ if (PYTHON_EXTENSIONS)
+   # Create tree of symbolic links in structure required for successful

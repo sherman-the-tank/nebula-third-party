@@ -10,7 +10,7 @@ set(make_envs "env" "GEN=ninja")
 ExternalProject_Add(
     ${name}
     URL https://github.com/duckdb/duckdb/archive/refs/tags/v1.1.3.tar.gz
-    URL_HASH MD5=a1498ddceed95e448b9eb5a1f99fe467
+    URL_HASH MD5=5314de1696e2c20ec58dce75a8a483c9
     DOWNLOAD_NAME duckdb-1.1.3.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}

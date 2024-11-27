@@ -206,7 +206,7 @@ end_time=$(date +%s)
 find $install_dir -name '*.la' | xargs rm -f
 
 # Remove big unneeded binaries
-binaries+=(openssl gss-client dump_syms_mac)
+binaries+=(gss-client dump_syms_mac)
 binaries+=(uuclient sim_client)
 binaries+=(sclient compile_et)
 binaries+=(c_rehash gflags_completions.sh)

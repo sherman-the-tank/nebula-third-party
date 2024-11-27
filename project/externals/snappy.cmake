@@ -7,7 +7,7 @@ set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
     URL https://github.com/google/snappy/archive/refs/tags/1.2.1.tar.gz
-    URL_HASH MD5=213b6324b7790d25f5368629540a172c
+    URL_HASH MD5=dd6f9b667e69491e1dbf7419bdf68823
     DOWNLOAD_NAME snappy-1.2.1.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
