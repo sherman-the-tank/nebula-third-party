@@ -6,9 +6,9 @@ set(name protobuf)
 set(source_dir ${CMAKE_CURRENT_BINARY_DIR}/${name}/source)
 ExternalProject_Add(
     ${name}
-    URL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v29.0.tar.gz
-    URL_HASH MD5=04ee9a60a4f3100ae52b2a85fabc66c3
-    DOWNLOAD_NAME protobuf-29.0.tar.gz
+    URL https://github.com/protocolbuffers/protobuf/archive/refs/tags/v29.1.tar.gz
+    URL_HASH MD5=03df50122cab69c446923cd8d245bbea
+    DOWNLOAD_NAME protobuf-29.1.tar.gz
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/${name}
     TMP_DIR ${BUILD_INFO_DIR}
     STAMP_DIR ${BUILD_INFO_DIR}
@@ -24,6 +24,7 @@ ExternalProject_Add(
         -Dprotobuf_BUILD_SHARED_LIBS=ON
         -Dprotobuf_WITH_ZLIB=ON
         -Dprotobuf_ABSL_PROVIDER=package
+        -Dprotobuf_BUILD_LIBUPB=OFF
     BUILD_COMMAND make -s -j${BUILDING_JOBS_NUM}
     BUILD_IN_SOURCE 1
     INSTALL_COMMAND make -s -j${BUILDING_JOBS_NUM} install

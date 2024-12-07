@@ -24,7 +24,7 @@ set(ARROW_CMAKE_ARGS
         -DARROW_JSON=ON
         -DARROW_COMPUTE=ON
         -DARROW_GANDIVA=ON
-        -DARROW_TESTING=OFF
+        -DARROW_TESTING=ON
         -DARROW_FILESYSTEM=ON
         -DARROW_HDFS=ON
 # TODO(sye) Temporarily disable AWS S3 support, due to awssdk build issues
@@ -62,6 +62,7 @@ ExternalProject_Add(
         TMP_DIR ${BUILD_INFO_DIR}
         STAMP_DIR ${BUILD_INFO_DIR}
         DOWNLOAD_DIR ${DOWNLOAD_DIR}
+        PATCH_COMMAND patch -p1 < ${CMAKE_SOURCE_DIR}/patches/${name}-18.1.0.patch
         CONFIGURE_COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}" ${ARROW_CMAKE_ARGS} ./cpp
         BUILD_COMMAND "${MakeEnvs}" make -e -s -j${BUILDING_JOBS_NUM}
         BUILD_IN_SOURCE 1
